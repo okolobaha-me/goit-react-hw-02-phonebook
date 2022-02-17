@@ -35,7 +35,7 @@ class App extends Component {
 
     const visibleContacts = contacts.filter(
       ({ name, phone }) =>
-        name.includes(lowerCaseFilter) ||
+        name.toLowerCase().includes(lowerCaseFilter) ||
         phone.toLowerCase().includes(lowerCaseFilter)
     );
 
