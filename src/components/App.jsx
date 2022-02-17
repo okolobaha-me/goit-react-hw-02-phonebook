@@ -23,6 +23,12 @@ class App extends Component {
     this.setState({ filter: e.currentTarget.value });
   };
 
+  deleteContact = contactId => {
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+
   render() {
     const { contacts, filter } = this.state;
     const lowerCaseFilter = filter.toLowerCase();
@@ -35,11 +41,14 @@ class App extends Component {
 
     return (
       <div>
-        <h1>Phonebook</h1>
+        <h1 className={'mainTitle'}>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
-        <h2>Contacts</h2>
+        <h2 className={'title'}>Contacts</h2>
         <Filter value={filter} onChange={this.handleChangeFilter} />
-        <ContactList contacts={visibleContacts} />
+        <ContactList
+          contacts={visibleContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
