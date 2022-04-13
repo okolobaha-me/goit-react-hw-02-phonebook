@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import shortID from 'shortid';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 import ContactList from './ContactList';
@@ -10,7 +11,26 @@ class App extends Component {
     filter: '',
   };
 
+  isAlreadyExist(name) {
+    return this.state.contacts.some(elem => elem.name === name);
+  }
+
+  isEmptyString(str) {
+    return str.length === 0;
+  }
+
   addContact = (name, phone) => {
+    if (this.isEmptyString(name) || this.isEmptyString(phone)) {
+      Notify.failure("U can't add empty contact");
+      return;
+    }
+    if (this.isAlreadyExist(name)) {
+      Notify.failure(
+        'Contact with same name is already exist please entre new name'
+      );
+      return;
+    }
+
     const newContact = { name, phone, id: shortID.generate() };
 
     this.setState(({ contacts }) => ({
