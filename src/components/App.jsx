@@ -20,6 +20,7 @@ class App extends Component {
   }
 
   addContact = (name, phone) => {
+    name = name.trim();
     if (this.isEmptyString(name) || this.isEmptyString(phone)) {
       Notify.failure("U can't add empty contact");
       return;
